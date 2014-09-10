@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Deferred</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script src='js/jquery-2.1.1.min.js'></script>
+    </head>
+
+    <body>
+        <div>
+            <center><img id='loadingimg' src='images/feedme.gif'/></center>
+            <center><h1 class='clickable' id='feedbtn'>I'm hungry! Feed me!</h1></center>
+        </div>
+        <script>
+            $('#loadingimg').hide();
+
+            function loadData() {
+                $('#loadingimg').show();
+                $('#feedbtn').hide();
+                var deferred = $.Deferred();
+                setTimeout(function() {
+                    if (Math.random() < 0.5) {
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                    }
+                }, 3000);
+                return deferred.promise();
+            }
+
+            $('#feedbtn').click(function(e) {
+                var promise = loadData();
+                promise.done(function(e) {
+                    alert('Cat says: \"Urgh! I\'m getting bigger!\"');
+                });
+                promise.fail(function() {
+                    alert('Cat says: \"You don\'t know anything about cats!\"');
+                });
+                promise.always(function() {
+                    $('#loadingimg').hide();
+                    $('#feedbtn').show();
+                });
+            });
+        </script>
+    </body>
+</html>
