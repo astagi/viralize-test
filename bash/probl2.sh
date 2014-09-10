@@ -1,6 +1,6 @@
 #!/bin/bash
+#Usage ./probl2.sh epa-http.txt
 
-filename="epa-http.txt"
 arr_sites=
 arr_visits=
 redo_min=true #just for optimization
@@ -36,7 +36,7 @@ do
             redo_min=true
         fi
     fi
-done < "$filename"
+done < "$1"
 for (( i=0; i<arr_visits_length; i++ ))
 do
     echo "${arr_sites[$i]}: ${arr_visits[$i]}"
